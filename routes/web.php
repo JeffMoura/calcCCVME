@@ -20,16 +20,11 @@ Route::get('/', function () {
 Route::get('/', function(){
     return view('paginas/home');
 });
-Route::get('/cc', function(){
-    return view('paginas/calcCC');
-});
-Route::get('/vme', function(){
-    return view('paginas/calcVME');
-});
 Route::get('/sobre', function(){
-    return view('pagina/sobre');
+    return view('paginas/sobre');
 });
 Route::get('/instrucao', function(){
+    return view('paginas/instrucao');
 });
 /*
 Route::get('/','CalcController@inicio');

@@ -34,6 +34,8 @@ $(function(){
 				rs.value = (qty * qty).toFixed(3); //R-Quadrado
 			}
 		},
+
+        //CALCULAR CC
 		calcTotal: function(){
 			var sumsl = 0, sumslsq = 0, sumevar = 0, denominator = 0, comprel = 0, rowcount, s1Val;
 			for(rowcount = ECF.numItemRows(); rowcount >= 1; rowcount--){
@@ -54,6 +56,28 @@ $(function(){
 			document.getElementById('total').value = (comprel === 0.0 ? '' : comprel.toFixed(3));
 			return true;
 		},
+
+
+        //calcular VME
+        calcTotalVme: function(){
+			var sumsl = 0, sumslsq = 0, sumevar = 0, denominator = 0, comprel = 0, rowcount, s1Val;
+			for(rowcount = ECF.numItemRows(); rowcount >= 1; rowcount--){
+				s1Val = parseFloat(document.getElementById('sl' + rowcount).value);
+				if(!isNaN(s1Val)){
+                    // calcula o quadrado das cargas fatoriais e depois soma
+					sumslsq += parseFloat(document.getElementById('sl' + rowcount).value) * parseFloat(document.getElementById('sl' + rowcount).value);
+					//soma dos erros de mensuração
+                    sumevar += parseFloat(document.getElementById('ev' + rowcount).value);
+                    //recebe a soma das cargas fatoriais elevada ao quadrado + soma dos erros de mensuração
+					denominator = sumslsq + sumevar;
+                    //VME = soma das cargas fatoriais ao quadrado dividido pelo denominador acima
+					comprel = sumslsq / denominator;
+				}
+			}
+			document.getElementById('totalvme').value = (comprel === 0.0 ? '' : comprel.toFixed(3));
+			return true;
+		},
+
 		form: document.getElementById('energyCalculator'),
 		getRowNo: function(item){
 			return typeof item === 'number' ? item : $(item).parents('tr')[0].rowIndex;
@@ -78,12 +102,15 @@ $(function(){
 				while((targ.value !== '') && (targ.value.match(/^[\d]*\.?[\d]*$/) === null)){targ.value = targ.value.substring(0,targ.value.length - 1);}
 				ECF.calcRow(ECF.getRowNo(targ));
 				ECF.calcTotal();
+                ECF.calcTotalVme();
+
 			}
 		},
 		removeRow: function(item){
 			$('#item_row' + ECF.getRowNo(item)).remove();
 			ECF.renumberRows();
 			ECF.calcTotal();
+            ECF.calcTotalVme();
 		},
 		renumberRows: function(){
 			var rowCount = rowCount = ECF.numItemRows(), rowIndex, row, cellIndex, cell, childIndex, child, rowNum;
@@ -128,6 +155,7 @@ $(function(){
 			var rowNumber;
 			for(rowNumber = ECF.itemListTbody.rows.length; rowNumber > 1; rowNumber--){ECF.removeRow(rowNumber);}
 			$('#total').val('');
+            $('#totalvme').val('');
 			$('#sl1').val('');
 			$('#ev1').val('');
 			$('#rs1').val('');

@@ -23,8 +23,8 @@
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="/">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Home</span></a>
+                    <i class="fas fa-fw fa-calculator"></i>
+                    <span>Calculadora</span></a>
             </li>
 
             <!-- Divider -->
@@ -35,22 +35,7 @@
             <div class="sidebar-heading">
                 Navegar
             </div>
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-calculator"></i>
-                    <span>Calculadoras</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Acessar:</h6>
-                        <a class="collapse-item" href="/cc">CC</a>
-                        <a class="collapse-item" href="/vme">VME</a>
-                        <div class="collapse-divider"></div>
-                    </div>
-                </div>
-            </li>
+
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
@@ -63,9 +48,9 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Descrição:</h6>
-                        <a class="collapse-item" href="/instrucao#secao02">O que são?</a>
-                        <a class="collapse-item" href="utilities-border.html">Como preencher</a>
-                        <a class="collapse-item" href="utilities-animation.html">Equações</a>
+                        <a class="collapse-item" href="/instrucao#oquee">O que é?</a>
+                        <a class="collapse-item" href="/instrucao#comopreencher">Como preencher</a>
+                        <a class="collapse-item" href="/instrucao#equacoes">Equações</a>
                     </div>
                 </div>
             </li>
