@@ -1,0 +1,147 @@
+/*form {
+    padding-top: 20px;
+    width: 400px;
+    display: block;
+    background: #fff;
+    margin-left: 30%;
+	margin-right: 30%;
+
+
+}
+::-webkit-input-placeholder {
+    color: #666;
+    font-size:11px;
+}
+:-moz-placeholder {
+
+    color: #666;
+    font-size:11px;
+}
+::-moz-placeholder {
+
+    color: #666;
+    font-size: 11px;
+}
+:-ms-input-placeholder {
+    color: #666;
+    font-size:11px;
+}
+table {
+    font-family: Arial;
+    color:#666;
+    font-size:12px;
+    background:#e7e8e9;
+    width:650px;
+    margin:0px 0px 0px 0px ;
+    border:#ccc 1px solid;
+    padding:5px 10px 5px 10px;
+}/*
+thead th {
+    padding:15px 5px 5px 5px;
+    text-shadow: 1px 1px 1px #fff;
+    background:#e7e8e9;
+    font-size:14px;
+    text-align: center;
+    vertical-align: bottom;
+}
+th.column1 {
+    width: 15px;
+}
+th.column2, th.column3, th.column4 {
+    width: 150px;
+}
+th.column5 {
+    width: 55px;
+}
+tr.item_rows {
+    height: 30px;
+}
+tr.btmtablespace {
+    height:50px;
+}
+td.item_column, td.loading_column, td.error_column, td.rsquare_column, td.button_column {
+    text-align: center;
+
+    vertical-align: middle;
+
+}
+input.item {
+    width: 40%;
+    text-align:center;
+}
+input.loading, input.errorvar, input.rsquare {
+    width: 60%;
+    text-align:center;
+}*/
+input.addbutton {
+    text-align:center;
+    text-decoration: none;
+    font-size: 14px;
+    font-family: sans-serif;
+    white-space: nowrap;
+    -webkit-font-smoothing: antialiased;
+    color: #FFF;
+    background: #2F4F4F;
+    display: inline-block;
+    height: 50px;
+    width: 100px;
+    padding: 0;
+    margin: 0px 0px;
+
+}
+input.addbutton:hover {
+    background: #2F4F4F;
+
+}
+input.removebutton {
+    text-align:center;
+    text-decoration: none;
+    font-size: 100%;
+    font-family: sans-serif;
+    white-space: nowrap;
+    -webkit-font-smoothing: antialiased;
+    color: #FFF;
+    background: #de4d4d;
+    display: inline-block;
+    height: 50%;
+    width: 100%;
+    padding: 5;
+    margin: 0px 0px;
+    border: solid #de4d4d;
+}
+input.removebutton:hover {
+    background: #db3d3d;
+    border: solid #db3d3d;
+}
+td.crtitle {
+    text-shadow: 1px 1px 1px #fff;
+    font-weight: bold;
+    color: #666;
+    font-size:14px;
+    text-align:right;
+}
+input.crtotal {
+    width: 80%;
+    text-align: center;
+}
+input.refreshbutton {
+    text-align:center;
+    text-decoration: none;
+    font-size: 12px;
+    font-family: sans-serif;
+    white-space: nowrap;
+    -webkit-font-smoothing: antialiased;
+    color: #FFF;
+    background: #424242;
+    display: inline-block;
+    height: 25%;
+    width: 100%;
+    padding: 0;
+   /*margin: 15px 0px;*/
+    border: solid #424242;
+}
+input.refreshbutton:hover {
+    color: #ff3d3d;
+    background: #5b5b5b;
+    border: solid #5b5b5b;
+}
