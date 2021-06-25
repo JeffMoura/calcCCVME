@@ -63,7 +63,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Descrição:</h6>
-                        <a class="collapse-item" href="utilities-color.html">O que são?</a>
+                        <a class="collapse-item" href="/instrucao#secao02">O que são?</a>
                         <a class="collapse-item" href="utilities-border.html">Como preencher</a>
                         <a class="collapse-item" href="utilities-animation.html">Equações</a>
                     </div>
