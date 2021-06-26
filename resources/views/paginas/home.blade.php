@@ -59,7 +59,7 @@
                 </tbody>
                 <tfoot>
                     <tr class="form-group">
-                        <td colspan="3" class="crtitle">Variância Média de Extraída:&nbsp;&nbsp;</td>
+                        <td colspan="3" class="crtitle">Variância Média Extraída:&nbsp;&nbsp;</td>
                         <td><input class="form-input form-control" readonly="readonly" name="totalvme" id="totalvme" readonly="readonly" type="text"></td>
                     </tr>
                     <tr class="form-group">

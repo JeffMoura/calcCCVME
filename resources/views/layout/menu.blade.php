@@ -48,7 +48,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Descrição:</h6>
-                        <a class="collapse-item" href="/instrucao#oquee">O que é?</a>
+                        <a class="collapse-item" href="/instrucao#oquee">O que são CC e VME?</a>
                         <a class="collapse-item" href="/instrucao#comopreencher">Como preencher</a>
                         <a class="collapse-item" href="/instrucao#equacoes">Equações</a>
                     </div>
