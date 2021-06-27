@@ -31,17 +31,6 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0"><h1></h1>
-    <section class="anime" id="comopreencher">
-        <div class="grid-img img-right"></div>
-        <div class="grid-text">
-            <h2><b>Como Funciona</b></h2>
-            <p>A calculadora funciona</p>
-            <a target="_blank" href="https://www.origamid.com/cursos/ux-design-heuristicas/">Ver Mais</a>
-        </div>
-    </section>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0"><h1></h1>
 
     <section class="anime" id="equacoes">
         <h2><b>Equações</b></h2>
@@ -62,7 +51,7 @@
                 de mensuração (ou variância residual).</p>
         </div>
         <div class="grid-img">
-            <img src="../calculadora/img/cc.png" alt="Img 3">
+            <img src="../calculadora/img/cc.png" class="img-fluid" alt="Imagem responsiva">
         </div>
         <div class="grid-text">
             <h4> Variância Média Extraída</h4>
@@ -74,10 +63,63 @@
                padronizadas.</p>
         </div>
         <div class="grid-img">
-            <img src="../calculadora/img/vme.png" alt="Img 3">
+            <img src="../calculadora/img/vme.png" class="img-fluid" alt="Imagem responsiva">
         </div>
 
     </section>
 
-
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0"><h1></h1>
+    <section class="anime" id="comopreencher">
+        <div class="grid-img img-right"></div>
+        <div class="grid-text">
+            <h2><b>Como Preencher</b></h2>
+            <p class="text-justify">1. Inserir carregamento padronizado no item</p>
+            <p class="text-justify">2. Com base no carregamento padronizado é estimado a variância do erro (ɛ=1-λ²)</p>
+            <p class="text-justify">3. Com base no carregamento padronizado é estimado o valor do R-quadrado (r²=λ²=1-ɛ)</p>
+            <p class="text-justify">4. Clique em ADICIONAR para continuar a inserir o carregamento padronizado para cada item</p>
+            <p class="text-justify">5. A cada item adicionado é mostrado a numeração</p>
+            <p class="text-justify">6. Clique em EXCLUIR para remover qualquer item</p>
+            <p class="text-justify">7. É mostrado os valores totais do CC e VME</p>
+            <p class="text-justify">8. Clique em LIMPAR, caso queira redefinir a calculadora</p>
+        </div>
+        <div class="p-3 mb-2 bg-primary text-white">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" >
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img class="d-block w-100" src="../calculadora/img/calc1.png" alt="First slide">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="../calculadora/img/calc2.png" alt="Second slide">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="../calculadora/img/calc3.png" alt="Third slide">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="../calculadora/img/calc4.png" alt="Third slide">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="../calculadora/img/calc5.png" alt="Third slide">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="../calculadora/img/calc6.png" alt="Third slide">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="../calculadora/img/calc7.png" alt="Third slide">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="../calculadora/img/calc8.png" alt="Third slide">
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        </div>
 @stop
+<script src="{{asset('calculadora/jquery.min.js')}}"></script>
