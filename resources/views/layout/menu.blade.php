@@ -67,6 +67,7 @@
                         <h6 class="collapse-header">Desenvolvimento:</h6>
                         <a class="collapse-item" href="/sobre#equipe">Equipe</a>
                         <a class="collapse-item" href="/sobre#apoio">Apoio</a>
+                        <a class="collapse-item" href="/sobre#desenvolvimento">Ferramentas</a>
                     </div>
                 </div>
             </li>

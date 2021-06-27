@@ -17,7 +17,7 @@
 
     <section class="anime" id="oquee">
         <div class="grid-text">
-            <h2><b>O que são CC e VME?</b></h2>
+            <h2 class="text-center"><b>O que são CC e VME?</b></h2>
             <p class="text-justify">A CC e a VME são, primordialmente, indicadores que
                 podem ser utilizados para avaliar a qualidade do modelo
                 estrutural de um instrumento psicométrico (Hair, Black,
@@ -33,7 +33,7 @@
     <hr class="sidebar-divider my-0"><h1></h1>
 
     <section class="anime" id="equacoes">
-        <h2><b>Equações</b></h2>
+        <h2 class="text-center"><b>Equações</b></h2>
 
         <div class="grid-text">
             <p class="text-justify">As equações de CC e VME são semelhantes e ambas são calculadas a partir das cargas
@@ -73,7 +73,7 @@
     <section class="anime" id="comopreencher">
         <div class="grid-img img-right"></div>
         <div class="grid-text">
-            <h2><b>Como Preencher</b></h2>
+            <h2 class="text-center"><b>Como Preencher</b></h2>
             <p class="text-justify">1. Inserir carregamento padronizado no item</p>
             <p class="text-justify">2. Com base no carregamento padronizado é estimado a variância do erro (ɛ=1-λ²)</p>
             <p class="text-justify">3. Com base no carregamento padronizado é estimado o valor do R-quadrado (r²=λ²=1-ɛ)</p>

@@ -21,20 +21,26 @@
 @section('conteudo')
 <section class="anime" id="equipe">
     <div class="grid-text">
-        <h2><b>Equipe</b></h2>
-        <p class="text-justify">Jefferson Moura....</p>
+        <h2 class="text-center"><b>Equipe</b></h2>
+        <p class="text-justify">Elencar projeto/equipe</p>
     </div>
 </section>
 <section class="anime" id="apoio">
     <div class="grid-text">
-        <h2><b>Apoio</b></h2>
+        <h2 class="text-center"><b>Apoio</b></h2>
         <p class="text-justify">Universidade Estadual de Montes Claros</p>
     </div>
 </section>
 <section class="anime" id="desenvolvimento">
     <div class="grid-text">
-        <h2><b>Ferramentas de Desenvolvimento</b></h2>
-        <p class="text-justify">PHP Laravel, JavaScript</p>
+        <h2 class="text-center"><b>Ferramentas de Desenvolvimento</b></h2>
+        <div class="grid-img">
+            <img src="../calculadora/img/php.png" class="img-fluid max-width: 10%"   alt="Imagem responsiva"/>
+            <img src="../calculadora/img/laravel.png" class="img-fluid" alt="Imagem responsiva"/>
+            <img src="../calculadora/img/bootstrap.png" class="img-fluid" alt="Imagem responsiva"/>
+            <img src="../calculadora/img/javascript.png" class="img-fluid" alt="Imagem responsiva"/>
+
+        </div>
     </div>
 </section>
 @stop
