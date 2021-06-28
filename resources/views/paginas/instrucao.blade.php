@@ -3,6 +3,7 @@
 
 <!-- Styles-->
 <link rel="stylesheet" href="{{ url('calculadora/style_calculadora.css')}}">
+
 <!-- Bootstrap-->
 <link rel="stylesheet" href="{{ asset('calculadora/bootstrap.css')}}">
 
@@ -80,7 +81,7 @@
             <p class="text-justify">4. Clique em ADICIONAR para continuar a inserir o carregamento padronizado para cada item</p>
             <p class="text-justify">5. A cada item adicionado é mostrado a numeração</p>
             <p class="text-justify">6. Clique em EXCLUIR para remover qualquer item</p>
-            <p class="text-justify">7. É mostrado os valores totais do CC e VME</p>
+            <p class="text-justify">7. É mostrado os valores totais da CC e VME</p>
             <p class="text-justify">8. Clique em LIMPAR, caso queira redefinir a calculadora</p>
         </div>
         <div class="p-3 mb-2 bg-primary text-white">
