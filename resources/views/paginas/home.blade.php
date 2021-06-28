@@ -22,7 +22,7 @@
 
 <div class="table-responsive">
     <div class="signup-content">
-        <form method="post" class="signup-form" action="" autocomplete="off" onsubmit="return false;" id="energyCalculator">
+        <form method="post" class="signup-form" action="" autocomplete="off" onsubmit="return false;" id="calculadora">
             <table class="table table-borderless ">
                 <thead>
                     <tr>
@@ -34,18 +34,18 @@
                     </tr>
                 </thead>
                 <tbody id="itemlist">
-                    <tr class="item_row" id="item_row1">
-                            <td class="item_column">
-                                <input type="number" class="item form-control" name="itemno1" value="1" id="itemno1" readonly="readonly"/>
+                    <tr class="item_linha" id="item_linha1">
+                            <td class="item_coluna">
+                                <input type="number" class="item form-control" name="item_calc" value="1" id="item_calc" readonly="readonly"/>
                             </td>
-                            <td class="item_column">
-                                <input type="text" class="loading form-control" name="sl1" id="sl1" placeholder="Inserir"/>
+                            <td class="item_coluna">
+                                <input type="text" class="carregando form-control" name="carregamento_padronizado1" id="carregamento_padronizado1" placeholder="Inserir"/>
                             </td>
-                            <td class="item_column">
-                                <input type="text" class="errorvar form-control" name="ev1" id="ev1" readonly="readonly" />
+                            <td class="item_coluna">
+                                <input type="text" class="errorvar form-control" name="variancia_erro1" id="variancia_erro1" readonly="readonly" />
                             </td>
-                            <td class="item_column">
-                                <input type="text" class="rsquare form-control" name="rs1" id="rs1" readonly="readonly" />
+                            <td class="item_coluna">
+                                <input type="text" class="rquadrado form-control" name="r_quadrado1" id="r_quadrado1" readonly="readonly" />
                             </td>
                             <td class="button_column"></td>
                     </tr>
@@ -59,17 +59,17 @@
                 </tbody>
                 <tfoot>
                     <tr class="form-group">
-                        <td colspan="3" class="crtitle">Variância Média Extraída:&nbsp;&nbsp;</td>
+                        <td colspan="3" class="total">Variância Média Extraída:&nbsp;&nbsp;</td>
                         <td><input class="form-input form-control" readonly="readonly" name="totalvme" id="totalvme" readonly="readonly" type="text"></td>
                     </tr>
                     <tr class="form-group">
-                        <td colspan="3" class="crtitle">Confiabilidade Composta:&nbsp;&nbsp;</td>
-                        <td><input class="form-input form-control" readonly="readonly" name="total" id="total" readonly="readonly" type="text"></td>
+                        <td colspan="3" class="total">Confiabilidade Composta:&nbsp;&nbsp;</td>
+                        <td><input class="form-input form-control" readonly="readonly" name="totalcc" id="totalcc" readonly="readonly" type="text"></td>
                     </tr>
 
                     <tr class="form-group">
                         <td colspan="3">&nbsp;</td>
-                        <td><input type="button" id="FormRefresh" class="btn btn-warning" value="Limpar"></td>
+                        <td><input type="button" id="btn_limpar" class="btn btn-warning" value="Limpar"></td>
                     </tr>
                     </div>
                 </tfoot>
