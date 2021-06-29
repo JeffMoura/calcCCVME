@@ -1,28 +1,8 @@
 
-input.removebutton {
-    text-align:center;
-    text-decoration: none;
-    font-size: 100%;
-    font-family: sans-serif;
-    white-space: nowrap;
-    -webkit-font-smoothing: antialiased;
-    color: #FFF;
-    background: #de4d4d;
-    display: inline-block;
-    height: 100%;
-    width: 100%;
-    padding: 5;
-    margin: 0px 0px;
-    border: solid #de4d4d;
-}
-input.removebutton:hover {
-    background: #db3d3d;
-    border: solid #db3d3d;
-}
 td.total {
     text-shadow: 1px 1px 1px #fff;
     font-weight: bold;
-    color: #666;
-    font-size:14px;
+    color: rgb(42, 62, 241);
+    font-size:1em;
     text-align:right;
 }

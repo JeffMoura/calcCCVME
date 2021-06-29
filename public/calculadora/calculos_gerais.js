@@ -2,9 +2,52 @@
 $(function(){
     //variável recebe as funções
 	var CALC = {
+        //recebe o formulário da calculadora
+		form: document.getElementById('calculadora'),
+        getRowNo: function(item){
+            //retorna a var item se o tipo dele for número
+			return typeof item === 'number' ? item : $(item).parents('tr')[0].rowIndex;
+		},
+		initPlaceHolder: function(input){
+            //inicia o formulário com marcador no campo Carregamento Padronizado "digite aqui"
+			$(input).focus(function (){$(this).attr('placeholder','');}).blur(function(){$(this).attr('placeholder','Digite Aqui')});
+		},
+        //restringe o campo para entrada apenas de número e casas decimais
+		isNumberKey: function(evt){
+			var charCode = (evt.which) ? evt.which : event.keyCode
+			return !(charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46);
+		},
+
+        //seleciona o id de item da lista do corpo da tabela
+		itemListTbody: document.getElementById('itemlist'),
+        //função que retorna o tamanho/comprimento da lista de itens
+		numItemLinhas: function(){return CALC.itemListTbody.rows.length;},
+		//função para remover linha quando clicar no botão
+        onclickDeleteButton: function (evt){
+			evt = evt || window.event;
+			var targ = evt.target || evt.srcElement;
+			CALC.removeLinha(targ);
+		},
+        //função para remover linha
+        removeLinha: function(item){
+            $('#item_linha' + CALC.getRowNo(item)).remove();
+            CALC.renumerarLinhas();
+            CALC.calcTotalCC();
+            CALC.calcTotalVme();
+        },
+        onkeyup: function(evt){
+			var targ = evt.target || evt.srcElement;
+			if(targ.nodeName && (targ.nodeName.toLowerCase() === 'input')){
+				while((targ.value !== '') && (targ.value.match(/^[\d]*\.?[\d]*$/) === null)){targ.value = targ.value.substring(0,targ.value.length - 1);}
+				CALC.calcular_linha(CALC.getRowNo(targ));
+				CALC.calcTotalCC();
+                CALC.calcTotalVme();
+			}
+		},
+
         //função para adicionar novos itens (linhas)
 		adicionar_linha: function(){
-			var linhaCont = CALC.numItemRows(), linha = CALC.itemListTbody.insertRow(linhaCont), cell, input;
+			var linhaCont = CALC.numItemLinhas(), linha = CALC.itemListTbody.insertRow(linhaCont), cell, input;
 			linhaCont++;
 			linha.className = 'item_linha';
 			linha.id = 'item_linha' + linhaCont;
@@ -18,12 +61,67 @@ $(function(){
 			$(linha.insertCell()).addClass('error_column').append(input);
 			input = $('<input class="rquadrado form-control"  readonly="readonly" type="text" id="r_quadrado' + linhaCont + '"name="r_quadrado' + linhaCont + '">');
 			$(linha.insertCell()).addClass('rquadrado_column').append(input);
-			input = $('<input type="button"  readonly="readonly" class="removebutton" name="del_row' + linhaCont + '" value="Excluir" id="del_row' + linhaCont + '">');
+			input = $('<input type="button"  readonly="readonly" class="btn btn-danger remover_botao" name="deletar_linha' + linhaCont + '" value="Excluir" id="deletar_linha' + linhaCont + '">');
 			input.click(CALC.onclickDeleteButton);
 			$(linha.insertCell()).addClass('button_column').append(input);
 			$(linha).children('input[type="text"]').attr("autocomplete", "off");
 		},
-		//função para cálculo de cada linha (Carregamento Padronizado, erro de mensuração e R-quadrado)
+
+        //função para renumerar e apagar todas as linhas, resetando o formulário completo
+        renumerarLinhas: function(){
+			var linhaCont = linhaCont = CALC.numItemLinhas(), linha_Index, linha, celula_index, cell, childIndex, child, numero_linha;
+            for(linha_Index = 1; linha_Index < linhaCont; linha_Index++){
+				numero_linha = linha_Index + 1;
+				linha = CALC.itemListTbody.rows[linha_Index];
+				linha.id = 'item_linha' + numero_linha;
+				for(celula_index = 0; celula_index < linha.cells.length; celula_index++){
+					cell = linha.cells[celula_index];
+					for(childIndex = 0; childIndex < cell.childNodes.length; childIndex++){
+						child = cell.childNodes[childIndex];
+						if(child.tagName && (child.tagName.toLowerCase() === 'input') && child.className){
+							switch(child.className.toLowerCase()){
+								case 'item':
+									child.id = 'item_calc' + numero_linha;
+									child.name = child.id;
+									child.value = numero_linha;
+								break;
+								case 'carregando':
+									child.id = 'carregamento_padronizado' + numero_linha;
+									child.name = child.id;
+								break;
+								case 'var_erro':
+									child.id = 'variancia_erro' + numero_linha;
+									child.name = child.id;
+								break;
+								case 'rquadrado':
+									child.id = 'r_quadrado' + numero_linha;
+									child.name = child.id;
+								break;
+								case 'remover_botao':
+									child.id = 'deletar_linha' + numero_linha;
+									child.name = child.id;
+								break;
+							}
+						}
+					}
+				}
+			}
+		},
+
+        //função para limpar os campos
+		limpar_campos: function(){
+			var numero_Linha;
+			for(numero_Linha = CALC.itemListTbody.rows.length; numero_Linha > 1; numero_Linha--){CALC.removeLinha(numero_Linha);}
+			$('#totalcc').val('');
+            $('#totalvme').val('');
+			$('#carregamento_padronizado1').val('');
+			$('#variancia_erro1').val('');
+			$('#r_quadrado1').val('');
+		},
+
+        /*----------------------- CALCULOS --------------------------------*/
+
+        //função para cálculo de cada linha (Carregamento Padronizado, erro de mensuração e R-quadrado)
 		calcular_linha: function(numero_Linha){
             //variável recebe o elemento carregamento padronizado
 			var carregamento_padronizado = document.getElementById('carregamento_padronizado' + numero_Linha), variancia_erro = document.getElementById('variancia_erro' +numero_Linha), r_quadrado = document.getElementById('r_quadrado' + numero_Linha), qty;
@@ -42,7 +140,7 @@ $(function(){
         //FUNÇÃO CALCULAR CC
 		calcTotalCC: function(){
 			var soma_cp = 0, soma_cp_exp = 0, soma_erro_var = 0, denominador = 0, calculo_cc = 0, linhaCont, cp;
-			for(linhaCont = CALC.numItemRows(); linhaCont >= 1; linhaCont--){
+			for(linhaCont = CALC.numItemLinhas(); linhaCont >= 1; linhaCont--){
                 //recebe o item do campo carreg. padroni. e converte para float
 				cp = parseFloat(document.getElementById('carregamento_padronizado' + linhaCont).value);
 				if(!isNaN(cp)){
@@ -67,7 +165,7 @@ $(function(){
         //FUNÇÃO CALCULAR VME
         calcTotalVme: function(){
 			var exp_cp_soma = 0, soma_erro_var = 0, denominador = 0, calculo_vme = 0, linhaCont, cp;
-			for(linhaCont = CALC.numItemRows(); linhaCont >= 1; linhaCont--){
+			for(linhaCont = CALC.numItemLinhas(); linhaCont >= 1; linhaCont--){
                 //recebe o item do campo carreg. padroni. e converte para float
 				cp = parseFloat(document.getElementById('carregamento_padronizado' + linhaCont).value);
 				if(!isNaN(cp)){
@@ -85,99 +183,13 @@ $(function(){
 			document.getElementById('totalvme').value = (calculo_vme === 0.0 ? '' : calculo_vme.toFixed(3));
 			return true;
 		},
-
-        //recebe o formulário da calculadora
-		form: document.getElementById('calculadora'),
-        getRowNo: function(item){
-            //retorna a var item se o tipo dele for número
-			return typeof item === 'number' ? item : $(item).parents('tr')[0].rowIndex;
-		},
-		initPlaceHolder: function(input){
-            //coloca no campo Carregamento Padronizado o marcador "digite aqui" se estiver vazio
-			$(input).focus(function (){$(this).attr('placeholder','');}).blur(function(){$(this).attr('placeholder','Digite Aqui')});
-		},
-		isNumberKey: function(evt){
-			var charCode = (evt.which) ? evt.which : event.keyCode
-			return !(charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46);
-		},
-		itemListTbody: document.getElementById('itemlist'),
-		numItemRows: function(){return CALC.itemListTbody.rows.length;},
-		onclickDeleteButton: function (evt){
-			evt = evt || window.event;
-			var targ = evt.target || evt.srcElement;
-			CALC.removeRow(targ);
-		},
-		onkeyup: function(evt){
-			var targ = evt.target || evt.srcElement;
-			if(targ.nodeName && (targ.nodeName.toLowerCase() === 'input')){
-				while((targ.value !== '') && (targ.value.match(/^[\d]*\.?[\d]*$/) === null)){targ.value = targ.value.substring(0,targ.value.length - 1);}
-				CALC.calcular_linha(CALC.getRowNo(targ));
-				CALC.calcTotalCC();
-                CALC.calcTotalVme();
-
-			}
-		},
-		removeRow: function(item){
-			$('#item_linha' + CALC.getRowNo(item)).remove();
-			CALC.renumberRows();
-			CALC.calcTotalCC();
-            CALC.calcTotalVme();
-		},
-		renumberRows: function(){
-			var linhaCont = linhaCont = CALC.numItemRows(), rowIndex, row, cellIndex, cell, childIndex, child, rowNum;
-			for(rowIndex = 1; rowIndex < linhaCont; rowIndex++){
-				rowNum = rowIndex + 1;
-				row = CALC.itemListTbody.rows[rowIndex];
-				row.id = 'item_linha' + rowNum;
-				for(cellIndex = 0; cellIndex < row.cells.length; cellIndex++){
-					cell = row.cells[cellIndex];
-					for(childIndex = 0; childIndex < cell.childNodes.length; childIndex++){
-						child = cell.childNodes[childIndex];
-						if(child.tagName && (child.tagName.toLowerCase() === 'input') && child.className){
-							switch(child.className.toLowerCase()){
-								case 'item':
-									child.id = 'item_calc' + rowNum;
-									child.name = child.id;
-									child.value = rowNum;
-								break;
-								case 'carregando':
-									child.id = 'carregamento_padronizado' + rowNum;
-									child.name = child.id;
-								break;
-								case 'var_erro':
-									child.id = 'variancia_erro' + rowNum;
-									child.name = child.id;
-								break;
-								case 'rquadrado':
-									child.id = 'r_quadrado' + rowNum;
-									child.name = child.id;
-								break;
-								case 'removebutton':
-									child.id = 'del_row' + rowNum;
-									child.name = child.id;
-								break;
-							}
-						}
-					}
-				}
-			}
-		},
-		limpar_tudo: function(){
-			var numero_Linha;
-			for(numero_Linha = CALC.itemListTbody.rows.length; numero_Linha > 1; numero_Linha--){CALC.removeRow(numero_Linha);}
-			$('#totalcc').val('');
-            $('#totalvme').val('');
-			$('#carregamento_padronizado1').val('');
-			$('#variancia_erro1').val('');
-			$('#r_quadrado1').val('');
-		}
 	};
 
-	$('#additem').click(CALC.adicionar_linha);
-	$('input.carregando').keyup(CALC.onkeyup).attr("autocomplete", "off");
-	CALC.initPlaceHolder($('input.carregando'));
-	$('.removebutton').click(CALC.onclickDeleteButton);
-	$('#btn_limpar').click(CALC.limpar_tudo);
+	$('#additem').click(CALC.adicionar_linha); //chama a função adicionar linha quando clica no botão  adicionar
+	$('input.carregando').keyup(CALC.onkeyup).attr("autocomplete", "off"); //chama o campo CP sem o autocompletar do teclado
+	CALC.initPlaceHolder($('input.carregando')); //iniciar o marcador no campo CP
+	$('.remover_botao').click(CALC.onclickDeleteButton); //chama a função deletar linha quando clica no botão remover
+	$('#btn_limpar').click(CALC.limpar_campos); //chama a função para reseter o formulário quando clica no botão limpar
 
 	// define o foco para o campo de carregamento padronizado
 	$('#carregamento_padronizado1').focus();
