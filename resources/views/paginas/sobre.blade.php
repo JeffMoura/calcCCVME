@@ -35,10 +35,10 @@
     <div class="grid-text">
         <h2 class="text-center"><b>Ferramentas de Desenvolvimento</b></h2>
         <div class="grid-img">
-            <img src="../calculadora/img/php.png" class="img-fluid max-width: 10%"   alt="Imagem responsiva"/>
-            <img src="../calculadora/img/laravel.png" class="img-fluid" alt="Imagem responsiva"/>
-            <img src="../calculadora/img/bootstrap.png" class="img-fluid" alt="Imagem responsiva"/>
-            <img src="../calculadora/img/javascript.png" class="img-fluid" alt="Imagem responsiva"/>
+            <img src="../calculadora/img/php.png" class="img-fluid"  height="20%" width="20%"  alt="Imagem responsiva"/>
+            <img src="../calculadora/img/laravel.png" class="img-fluid" height="20%" width="20%" alt="Imagem responsiva"/>
+            <img src="../calculadora/img/bootstrap.png" class="img-fluid" height="20%" width="20%" alt="Imagem responsiva"/>
+            <img src="../calculadora/img/javascript.png" class="img-fluid" height="20%" width="20%" alt="Imagem responsiva"/>
 
         </div>
     </div>

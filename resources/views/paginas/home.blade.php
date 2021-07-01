@@ -27,9 +27,9 @@
                 <thead>
                     <tr>
                         <th scope="col" class="column1">Nº Item</th>
-                        <th scope="col" class="column2">Carregamento padronizado</th>
+                        <th scope="col" class="column2">Carga Fatorial</th>
                         <th scope="col" class="column3">Variância de Erro</th>
-                        <th scope="col" class="column4">Item R-quadrado</th>
+                        <th scope="col" class="column4">Carga Fatorial ²</th>
                         <th scope="col" class="column5"></th>
                     </tr>
                 </thead>
@@ -59,12 +59,12 @@
                 </tbody>
                 <tfoot>
                     <tr class="form-group">
-                        <td colspan="3" class="total">Variância Média Extraída:&nbsp;&nbsp;</td>
-                        <td><input class="form-input form-control" readonly="readonly" name="totalvme" id="totalvme" readonly="readonly" type="text"></td>
-                    </tr>
-                    <tr class="form-group">
                         <td colspan="3" class="total">Confiabilidade Composta:&nbsp;&nbsp;</td>
                         <td><input class="form-input form-control" readonly="readonly" name="totalcc" id="totalcc" readonly="readonly" type="text"></td>
+                    </tr>
+                    <tr class="form-group">
+                        <td colspan="3" class="total">Variância Média Extraída:&nbsp;&nbsp;</td>
+                        <td><input class="form-input form-control" readonly="readonly" name="totalvme" id="totalvme" readonly="readonly" type="text"></td>
                     </tr>
 
                     <tr class="form-group">

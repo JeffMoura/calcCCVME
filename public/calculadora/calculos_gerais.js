@@ -47,7 +47,7 @@ $(function(){
 
         //função para adicionar novos itens (linhas)
 		adicionar_linha: function(){
-			var linhaCont = CALC.numItemLinhas(), linha = CALC.itemListTbody.insertRow(linhaCont), cell, input;
+			var linhaCont = CALC.numItemLinhas(), linha = CALC.itemListTbody.insertRow(linhaCont), input;
 			linhaCont++;
 			linha.className = 'item_linha';
 			linha.id = 'item_linha' + linhaCont;
