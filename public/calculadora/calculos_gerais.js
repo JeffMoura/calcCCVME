@@ -9,7 +9,7 @@ $(function(){
 			return typeof item === 'number' ? item : $(item).parents('tr')[0].rowIndex;
 		},
 		initPlaceHolder: function(input){
-            //inicia o formulário com marcador no campo Carregamento Padronizado "digite aqui"
+            //inicia o formulário com marcador no campo Carga Fatorial "digite aqui"
 			$(input).focus(function (){$(this).attr('placeholder','');}).blur(function(){$(this).attr('placeholder','Digite Aqui')});
 		},
         //restringe o campo para entrada apenas de número e casas decimais
@@ -67,6 +67,7 @@ $(function(){
 			$(linha).children('input[type="text"]').attr("autocomplete", "off");
 		},
 
+
         //função para renumerar e apagar todas as linhas, resetando o formulário completo
         renumerarLinhas: function(){
 			var linhaCont = linhaCont = CALC.numItemLinhas(), linha_Index, linha, celula_index, cell, childIndex, child, numero_linha;
@@ -121,39 +122,39 @@ $(function(){
 
         /*----------------------- CALCULOS --------------------------------*/
 
-        //função para cálculo de cada linha (Carregamento Padronizado, erro de mensuração e R-quadrado)
+        //função para cálculo de cada linha (Carga Fatorial, erro de mensuração e R-quadrado)
 		calcular_linha: function(numero_Linha){
-            //variável recebe o elemento carregamento padronizado
+            //variável recebe o elemento Carga Fatorial
 			var carregamento_padronizado = document.getElementById('carregamento_padronizado' + numero_Linha), variancia_erro = document.getElementById('variancia_erro' +numero_Linha), r_quadrado = document.getElementById('r_quadrado' + numero_Linha), qty;
-			//se o campo CP for vazio ou conter apenas o ponto, os campos de variâncie de erro e r-quadrado ficarão vazios
+			//se o campo CF for vazio ou conter apenas o ponto, os campos de variâncie de erro e r-quadrado ficarão vazios
             if((carregamento_padronizado.value === '') || (carregamento_padronizado.value === '.')){
 				variancia_erro.value = '';
 				r_quadrado.value ='';
 			}
 			else{
-				lambda = parseFloat(carregamento_padronizado.value); //recebe o campo de carregamento padronizado (λ)
+				lambda = parseFloat(carregamento_padronizado.value); //recebe o campo de Carga Fatorial (λ)
 				variancia_erro.value = (1 - Math.pow(lambda, 2)).toFixed(3); //calcula o erro de mensuração (ɛ=1-λ²)
-				r_quadrado.value = Math.pow(lambda, 2).toFixed(3); //calcula o R-Quadrado com base no carregamento padronizado (r²=λ²=1-ɛ)
+				r_quadrado.value = Math.pow(lambda, 2).toFixed(3); //calcula o R-Quadrado com base no Carga Fatorial (r²=λ²=1-ɛ)
 			}
 		},
 
         //FUNÇÃO CALCULAR CC
 		calcTotalCC: function(){
-			var soma_cp = 0, soma_cp_exp = 0, soma_erro_var = 0, denominador = 0, calculo_cc = 0, linhaCont, cp;
+			var soma_CF = 0, soma_CF_exp = 0, soma_erro_var = 0, denominador = 0, calculo_cc = 0, linhaCont, CF;
 			for(linhaCont = CALC.numItemLinhas(); linhaCont >= 1; linhaCont--){
                 //recebe o item do campo carreg. padroni. e converte para float
-				cp = parseFloat(document.getElementById('carregamento_padronizado' + linhaCont).value);
-				if(!isNaN(cp)){
+				CF = parseFloat(document.getElementById('carregamento_padronizado' + linhaCont).value);
+				if(!isNaN(CF)){
                     // soma as cargas fatoriais
-					soma_cp += parseFloat(document.getElementById('carregamento_padronizado' + linhaCont).value);
+					soma_CF += parseFloat(document.getElementById('carregamento_padronizado' + linhaCont).value);
 					// calcula o quadrado das cargas fatoriais
-                    soma_cp_exp = Math.pow(soma_cp, 2);
+                    soma_CF_exp = Math.pow(soma_CF, 2);
                     //soma dos erros de mensuração
 					soma_erro_var += parseFloat(document.getElementById('variancia_erro' + linhaCont).value);
                     //recebe a soma das cargas fatoriais ao quadrado + soma dos erros de mensuração
-					denominador = soma_cp_exp + soma_erro_var;
+					denominador = soma_CF_exp + soma_erro_var;
                     //CC = soma das cargas fatoriais ao quadrado dividido pelo denominador acima
-					calculo_cc = soma_cp_exp / denominador;
+					calculo_cc = soma_CF_exp / denominador;
 				}
 			}
             //O campo total CC recebe o resultado da equação acima
@@ -164,19 +165,19 @@ $(function(){
 
         //FUNÇÃO CALCULAR VME
         calcTotalVme: function(){
-			var exp_cp_soma = 0, soma_erro_var = 0, denominador = 0, calculo_vme = 0, linhaCont, cp;
+			var exp_CF_soma = 0, soma_erro_var = 0, denominador = 0, calculo_vme = 0, linhaCont, CF;
 			for(linhaCont = CALC.numItemLinhas(); linhaCont >= 1; linhaCont--){
                 //recebe o item do campo carreg. padroni. e converte para float
-				cp = parseFloat(document.getElementById('carregamento_padronizado' + linhaCont).value);
-				if(!isNaN(cp)){
+				CF = parseFloat(document.getElementById('carregamento_padronizado' + linhaCont).value);
+				if(!isNaN(CF)){
                     // calcula o quadrado das cargas fatoriais e depois soma
-					exp_cp_soma += Math.pow(cp, 2);
+					exp_CF_soma += Math.pow(CF, 2);
                     //soma dos erros de mensuração
                     soma_erro_var += parseFloat(document.getElementById('variancia_erro' + linhaCont).value);
                     //recebe a soma das cargas fatoriais elevada ao quadrado + soma dos erros de mensuração
-					denominador = exp_cp_soma + soma_erro_var;
+					denominador = exp_CF_soma + soma_erro_var;
                     //VME = soma das cargas fatoriais ao quadrado dividido pelo denominador acima
-					calculo_vme = exp_cp_soma / denominador;
+					calculo_vme = exp_CF_soma / denominador;
 				}
 			}
             //O campo total VME recebe o resultado da equação acima
@@ -186,11 +187,11 @@ $(function(){
 	};
 
 	$('#additem').click(CALC.adicionar_linha); //chama a função adicionar linha quando clica no botão  adicionar
-	$('input.carregando').keyup(CALC.onkeyup).attr("autocomplete", "off"); //chama o campo CP sem o autocompletar do teclado
-	CALC.initPlaceHolder($('input.carregando')); //iniciar o marcador no campo CP
+	$('input.carregando').keyup(CALC.onkeyup).attr("autocomplete", "off"); //chama o campo CF sem o autocompletar do teclado
+	CALC.initPlaceHolder($('input.carregando')); //iniciar o marcador no campo CF
 	$('.remover_botao').click(CALC.onclickDeleteButton); //chama a função deletar linha quando clica no botão remover
 	$('#btn_limpar').click(CALC.limpar_campos); //chama a função para reseter o formulário quando clica no botão limpar
 
-	// define o foco para o campo de carregamento padronizado
+	// define o foco para o campo de Carga Fatorial
 	$('#carregamento_padronizado1').focus();
 });

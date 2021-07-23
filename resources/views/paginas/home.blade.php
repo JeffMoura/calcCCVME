@@ -26,11 +26,11 @@
             <table class="table table-borderless ">
                 <thead>
                     <tr>
-                        <th scope="col" class="column1">Nº Item</th>
-                        <th scope="col" class="column2">Carga Fatorial</th>
-                        <th scope="col" class="column3">Variância de Erro</th>
-                        <th scope="col" class="column4">Carga Fatorial ²</th>
-                        <th scope="col" class="column5"></th>
+                        <th>Nº Item</th>
+                        <th>Carga Fatorial</th>
+                        <th>Variância de Erro</th>
+                        <th>Carga Fatorial ²</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="itemlist">
@@ -59,11 +59,11 @@
                 </tbody>
                 <tfoot>
                     <tr class="form-group">
-                        <td colspan="3" class="total">Confiabilidade Composta:&nbsp;&nbsp;</td>
+                        <td colspan="3" style=" text-align:right">Confiabilidade Composta:&nbsp;&nbsp;</td>
                         <td><input class="form-input form-control" readonly="readonly" name="totalcc" id="totalcc" readonly="readonly" type="text"></td>
                     </tr>
                     <tr class="form-group">
-                        <td colspan="3" class="total">Variância Média Extraída:&nbsp;&nbsp;</td>
+                        <td colspan="3" style=" text-align:right" >Variância Média Extraída:&nbsp;&nbsp;</td>
                         <td><input class="form-input form-control" readonly="readonly" name="totalvme" id="totalvme" readonly="readonly" type="text"></td>
                     </tr>
 
