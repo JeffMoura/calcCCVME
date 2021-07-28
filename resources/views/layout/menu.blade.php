@@ -17,7 +17,7 @@
                 <div class="sidebar-brand-text mx-3">CalC <sup>CC/VME</sup></div>
             </a>
 
-            <!-- Divider -->
+            <!-- Divisor -->
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
@@ -27,7 +27,7 @@
                     <span>Calculadora</span></a>
             </li>
 
-            <!-- Divider -->
+            <!-- Divisor -->
             <hr class="sidebar-divider">
 
 

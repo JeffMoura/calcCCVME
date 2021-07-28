@@ -18,10 +18,10 @@ $(function(){
 			return !(charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46);
 		},
 
-        //seleciona o id de item da lista do corpo da tabela
-		itemListTbody: document.getElementById('itemlist'),
+        //a lista geral recebe o id itemlist que pertece a todo corpo da tabela
+		lista_itens_geral: document.getElementById('itemlist'),
         //função que retorna o tamanho/comprimento da lista de itens
-		numItemLinhas: function(){return CALC.itemListTbody.rows.length;},
+		numItemLinhas: function(){return CALC.lista_itens_geral.rows.length;},
 		//função para remover linha quando clicar no botão
         onclickDeleteButton: function (evt){
 			evt = evt || window.event;
@@ -30,6 +30,8 @@ $(function(){
 		},
         //função para remover linha
         removeLinha: function(item){
+            /*pega a classe correspondente a linha com o parâmetro repassado e a remove, renumerando
+            posteriormente a quantidade de linhas e atualizando os cálculos*/
             $('#item_linha' + CALC.getRowNo(item)).remove();
             CALC.renumerarLinhas();
             CALC.calcTotalCC();
@@ -47,38 +49,58 @@ $(function(){
 
         //função para adicionar novos itens (linhas)
 		adicionar_linha: function(){
-			var linhaCont = CALC.numItemLinhas(), linha = CALC.itemListTbody.insertRow(linhaCont), input;
+            //cria a variável linhaCont e atribui a quantidade de linhas do formulário
+			var linhaCont = CALC.numItemLinhas();
+            //cria a variável linha e insere um nova linha
+            var linha = CALC.lista_itens_geral.insertRow(linhaCont);
+            //cria a variável input para receber os novos campos
+            var input;
+            //incrementa
 			linhaCont++;
+            //recebe a classe item_linha
 			linha.className = 'item_linha';
+            //recebe o id da classe item_linha e adiciona o incrementador
 			linha.id = 'item_linha' + linhaCont;
+            //entrada de um novo campo id
 			input = $('<input class="item form-control" readonly="readonly" type="text" id="item_calc' + linhaCont + '" name="item_calc' + linhaCont + '" value="' + linhaCont + '">');
-			$(linha.insertCell()).addClass('item_coluna').append(input);
-			input = $('<input class="carregando form-control" type="text" id="carregamento_padronizado' + linhaCont + '" name="carregamento_padronizado' + linhaCont + '" placeholder="Digite Aqui">');
+			$(linha.insertCell()).append(input);
+             //entrada de um novo campo carga fatorial
+			input = $('<input class="carregando form-control" type="text" id="carga_fatorial' + linhaCont + '" name="carga_fatorial' + linhaCont + '" placeholder="Digite Aqui">');
 			input.keyup(CALC.onkeyup).attr("autocomplete", "off");;
 			CALC.initPlaceHolder(input);
-			$(linha.insertCell()).addClass('carregando_column').append(input);
+			$(linha.insertCell()).append(input);
+             //entrada de um novo campo variância de erro
 			input = $('<input class="var_erro form-control"  readonly="readonly" type="text" id="variancia_erro' + linhaCont + '"name="variancia_erro' + linhaCont + '">');
-			$(linha.insertCell()).addClass('error_column').append(input);
-			input = $('<input class="rquadrado form-control"  readonly="readonly" type="text" id="r_quadrado' + linhaCont + '"name="r_quadrado' + linhaCont + '">');
-			$(linha.insertCell()).addClass('rquadrado_column').append(input);
-			input = $('<input type="button"  readonly="readonly" class="btn btn-danger remover_botao" name="deletar_linha' + linhaCont + '" value="Excluir" id="deletar_linha' + linhaCont + '">');
+            $(linha.insertCell()).append(input);
+			 //entrada de um novo campo carga fatorial ao quadrado
+            input = $('<input class="rquadrado form-control"  readonly="readonly" type="text" id="cf_quadrado' + linhaCont + '"name="cf_quadrado' + linhaCont + '">');
+			$(linha.insertCell()).append(input);
+			//entrada de um novo campo botão de excluir
+            input = $('<input type="button"  readonly="readonly" class="btn btn-danger remover_botao" name="deletar_linha' + linhaCont + '" value="Excluir" id="deletar_linha' + linhaCont + '">');
 			input.click(CALC.onclickDeleteButton);
-			$(linha.insertCell()).addClass('button_column').append(input);
+			$(linha.insertCell()).append(input);
 			$(linha).children('input[type="text"]').attr("autocomplete", "off");
 		},
 
-
         //função para renumerar e apagar todas as linhas, resetando o formulário completo
         renumerarLinhas: function(){
-			var linhaCont = linhaCont = CALC.numItemLinhas(), linha_Index, linha, celula_index, cell, childIndex, child, numero_linha;
-            for(linha_Index = 1; linha_Index < linhaCont; linha_Index++){
-				numero_linha = linha_Index + 1;
-				linha = CALC.itemListTbody.rows[linha_Index];
+            //cria variável que recebe a função do número de linhas da lista
+			var linhaCont = CALC.numItemLinhas();
+            //variáveis
+            var indice_linha, linha, indice_celula, celula, childIndex, child, numero_linha;
+            //o índice inicia com valor 1 e para cada indice menor que o tamanho da lista, incrementa
+            for(indice_linha = 1; indice_linha < linhaCont; indice_linha++){
+                //variável numero de linha recebe o índice da linha incrementado
+				numero_linha = indice_linha + 1;
+				/*variável linha recebe o índice_linha da lista de itens geral*/
+                linha = CALC.lista_itens_geral.rows[indice_linha];
+
 				linha.id = 'item_linha' + numero_linha;
-				for(celula_index = 0; celula_index < linha.cells.length; celula_index++){
-					cell = linha.cells[celula_index];
-					for(childIndex = 0; childIndex < cell.childNodes.length; childIndex++){
-						child = cell.childNodes[childIndex];
+                //o índice da celula inicia com valor 0 e para cada indice menor que o tamanho das celulas, incrementa
+				for(indice_celula = 0; indice_celula < linha.cells.length; indice_celula++){
+                    celula = linha.cells[indice_celula];
+					for(childIndex = 0; childIndex < celula.childNodes.length; childIndex++){
+						child = celula.childNodes[childIndex];
 						if(child.tagName && (child.tagName.toLowerCase() === 'input') && child.className){
 							switch(child.className.toLowerCase()){
 								case 'item':
@@ -87,7 +109,7 @@ $(function(){
 									child.value = numero_linha;
 								break;
 								case 'carregando':
-									child.id = 'carregamento_padronizado' + numero_linha;
+									child.id = 'carga_fatorial' + numero_linha;
 									child.name = child.id;
 								break;
 								case 'var_erro':
@@ -95,7 +117,7 @@ $(function(){
 									child.name = child.id;
 								break;
 								case 'rquadrado':
-									child.id = 'r_quadrado' + numero_linha;
+									child.id = 'cf_quadrado' + numero_linha;
 									child.name = child.id;
 								break;
 								case 'remover_botao':
@@ -109,32 +131,35 @@ $(function(){
 			}
 		},
 
-        //função para limpar os campos
+        //função para limpar todos os campos da lista
 		limpar_campos: function(){
+            /*cria uma variável que receberá o tamanho de linhas da lista, sempre que o tamanho da lista for maior que 1 linha chama
+            a função removelinha, que utilizará a variável numero_linha criada como parâmetro. Após a exclusão das linhas, atualiza
+            todos os campos como vazios*/
 			var numero_Linha;
-			for(numero_Linha = CALC.itemListTbody.rows.length; numero_Linha > 1; numero_Linha--){CALC.removeLinha(numero_Linha);}
+			for(numero_Linha = CALC.lista_itens_geral.rows.length; numero_Linha > 1; numero_Linha--){CALC.removeLinha(numero_Linha);}
 			$('#totalcc').val('');
             $('#totalvme').val('');
-			$('#carregamento_padronizado1').val('');
+			$('#carga_fatorial1').val('');
 			$('#variancia_erro1').val('');
-			$('#r_quadrado1').val('');
+			$('#cf_quadrado1').val('');
 		},
 
         /*----------------------- CALCULOS --------------------------------*/
 
-        //função para cálculo de cada linha (Carga Fatorial, erro de mensuração e R-quadrado)
+        //função para cálculo de cada linha (Carga Fatorial, Variância de erro e CF-quadrado)
 		calcular_linha: function(numero_Linha){
             //variável recebe o elemento Carga Fatorial
-			var carregamento_padronizado = document.getElementById('carregamento_padronizado' + numero_Linha), variancia_erro = document.getElementById('variancia_erro' +numero_Linha), r_quadrado = document.getElementById('r_quadrado' + numero_Linha), qty;
-			//se o campo CF for vazio ou conter apenas o ponto, os campos de variâncie de erro e r-quadrado ficarão vazios
-            if((carregamento_padronizado.value === '') || (carregamento_padronizado.value === '.')){
+			var carga_fatorial = document.getElementById('carga_fatorial' + numero_Linha), variancia_erro = document.getElementById('variancia_erro' +numero_Linha), cf_quadrado = document.getElementById('cf_quadrado' + numero_Linha), qty;
+			//se o campo CF for vazio ou conter apenas o ponto, os campos de variância de erro e CF-quadrado ficarão vazios
+            if((carga_fatorial.value === '') || (carga_fatorial.value === '.')){
 				variancia_erro.value = '';
-				r_quadrado.value ='';
+				cf_quadrado.value = '';
 			}
 			else{
-				lambda = parseFloat(carregamento_padronizado.value); //recebe o campo de Carga Fatorial (λ)
+				lambda = parseFloat(carga_fatorial.value); //recebe o campo de Carga Fatorial (λ)
 				variancia_erro.value = (1 - Math.pow(lambda, 2)).toFixed(3); //calcula o erro de mensuração (ɛ=1-λ²)
-				r_quadrado.value = Math.pow(lambda, 2).toFixed(3); //calcula o R-Quadrado com base no Carga Fatorial (r²=λ²=1-ɛ)
+				cf_quadrado.value = Math.pow(lambda, 2).toFixed(3); //calcula a carga fatorial ao quadrado com base no Carga Fatorial (r²=λ²=1-ɛ)
 			}
 		},
 
@@ -142,11 +167,11 @@ $(function(){
 		calcTotalCC: function(){
 			var soma_CF = 0, soma_CF_exp = 0, soma_erro_var = 0, denominador = 0, calculo_cc = 0, linhaCont, CF;
 			for(linhaCont = CALC.numItemLinhas(); linhaCont >= 1; linhaCont--){
-                //recebe o item do campo carreg. padroni. e converte para float
-				CF = parseFloat(document.getElementById('carregamento_padronizado' + linhaCont).value);
+                //recebe o item do campo carga fatorial e converte para float
+				CF = parseFloat(document.getElementById('carga_fatorial' + linhaCont).value);
 				if(!isNaN(CF)){
                     // soma as cargas fatoriais
-					soma_CF += parseFloat(document.getElementById('carregamento_padronizado' + linhaCont).value);
+					soma_CF += parseFloat(document.getElementById('carga_fatorial' + linhaCont).value);
 					// calcula o quadrado das cargas fatoriais
                     soma_CF_exp = Math.pow(soma_CF, 2);
                     //soma dos erros de mensuração
@@ -167,8 +192,8 @@ $(function(){
         calcTotalVme: function(){
 			var exp_CF_soma = 0, soma_erro_var = 0, denominador = 0, calculo_vme = 0, linhaCont, CF;
 			for(linhaCont = CALC.numItemLinhas(); linhaCont >= 1; linhaCont--){
-                //recebe o item do campo carreg. padroni. e converte para float
-				CF = parseFloat(document.getElementById('carregamento_padronizado' + linhaCont).value);
+                //recebe o item do carga fatorial e converte para float
+				CF = parseFloat(document.getElementById('carga_fatorial' + linhaCont).value);
 				if(!isNaN(CF)){
                     // calcula o quadrado das cargas fatoriais e depois soma
 					exp_CF_soma += Math.pow(CF, 2);
@@ -187,11 +212,11 @@ $(function(){
 	};
 
 	$('#additem').click(CALC.adicionar_linha); //chama a função adicionar linha quando clica no botão  adicionar
-	$('input.carregando').keyup(CALC.onkeyup).attr("autocomplete", "off"); //chama o campo CF sem o autocompletar do teclado
-	CALC.initPlaceHolder($('input.carregando')); //iniciar o marcador no campo CF
+	$('input.carregando').keyup(CALC.onkeyup).attr("autocomplete", "off"); //Desabilitando o autocompletar
+	//CALC.initPlaceHolder($('input.carregando')); //iniciar texto do campo CF
 	$('.remover_botao').click(CALC.onclickDeleteButton); //chama a função deletar linha quando clica no botão remover
 	$('#btn_limpar').click(CALC.limpar_campos); //chama a função para reseter o formulário quando clica no botão limpar
 
 	// define o foco para o campo de Carga Fatorial
-	$('#carregamento_padronizado1').focus();
+//	$('#carga_fatorial').focus();
 });

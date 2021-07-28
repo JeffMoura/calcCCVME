@@ -34,18 +34,18 @@
                     </tr>
                 </thead>
                 <tbody id="itemlist">
-                    <tr class="item_linha" id="item_linha1">
+                    <tr class="item_linha">
                             <td class="item_coluna">
-                                <input type="number" class="item form-control" name="item_calc" value="1" id="item_calc" readonly="readonly"/>
+                                <input type="number" class="item form-control"  value="1" id="item_calc" readonly="readonly"/>
                             </td>
                             <td class="item_coluna">
-                                <input type="text" class="carregando form-control" name="carregamento_padronizado1" id="carregamento_padronizado1" placeholder="Digite Aqui"/>
+                                <input type="text" class="carregando form-control" autofocus='true'  id="carga_fatorial1" placeholder="Digite Aqui"/>
                             </td>
                             <td class="item_coluna">
-                                <input type="text" class="var_erro form-control" name="variancia_erro1" id="variancia_erro1" readonly="readonly" />
+                                <input type="text" class="var_erro form-control" id="variancia_erro1" readonly="readonly" />
                             </td>
                             <td class="item_coluna">
-                                <input type="text" class="rquadrado form-control" name="r_quadrado1" id="r_quadrado1" readonly="readonly" />
+                                <input type="text" class="rquadrado form-control"  id="cf_quadrado1" readonly="readonly" />
                             </td>
                             <td class="button_column"></td>
                     </tr>
