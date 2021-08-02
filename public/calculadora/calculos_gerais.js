@@ -133,13 +133,15 @@ $(function(){
 			}
 		},
 
-        //função para limpar todos os campos da lista
+        //função para limpar  os campos da lista
 		limpar_campos: function(){
-            /*cria uma variável que receberá o tamanho de linhas da lista, sempre que o tamanho da lista for maior que 1 linha chama
+            /*cria uma variável que receberá o tamanho de linhas da lista, sempre que o tamanho da lista for maior que 1, linha chama
             a função removelinha, que utilizará a variável numero_linha criada como parâmetro. Após a exclusão das linhas, atualiza
             todos os campos como vazios*/
 			var numero_Linha;
-			for(numero_Linha = CALC.lista_itens_geral.rows.length; numero_Linha > 1; numero_Linha--){CALC.removeLinha(numero_Linha);}
+			for(numero_Linha = CALC.lista_itens_geral.rows.length; numero_Linha > 1; numero_Linha--){
+                CALC.removeLinha(numero_Linha);
+            }
 			$('#totalcc').val('');
             $('#totalvme').val('');
 			$('#carga_fatorial1').val('');
@@ -151,8 +153,11 @@ $(function(){
 
         //função para cálculo de cada linha (Carga Fatorial, Variância de erro e CF-quadrado)
 		calcular_linha: function(numero_Linha){
-            //variável recebe o elemento Carga Fatorial
-			var carga_fatorial = document.getElementById('carga_fatorial' + numero_Linha), variancia_erro = document.getElementById('variancia_erro' +numero_Linha), cf_quadrado = document.getElementById('cf_quadrado' + numero_Linha), qty;
+            //variáveis que recebem o elemento Carga Fatorial, variância de erro, carga fatorial ao quadrado
+			var carga_fatorial = document.getElementById('carga_fatorial' + numero_Linha);
+            var variancia_erro = document.getElementById('variancia_erro' +numero_Linha);
+            var cf_quadrado = document.getElementById('cf_quadrado' + numero_Linha);
+
 			//se o campo CF for vazio ou conter apenas o ponto, os campos de variância de erro e CF-quadrado ficarão vazios
             if((carga_fatorial.value === '') || (carga_fatorial.value === '.')){
 				variancia_erro.value = '';
