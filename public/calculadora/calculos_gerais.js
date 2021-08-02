@@ -13,8 +13,8 @@ $(function(){
 			$(input).focus(function (){$(this).attr('placeholder','');}).blur(function(){$(this).attr('placeholder','Digite Aqui')});
 		},
         //restringe o campo para entrada apenas de número e casas decimais
-		isNumberKey: function(evt){
-			var charCode = (evt.which) ? evt.which : event.keyCode
+		isNumberKey: function(event){
+			var charCode = (event.which) ? event.which : event.keyCode
 			return !(charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46);
 		},
 
@@ -22,10 +22,10 @@ $(function(){
 		lista_itens_geral: document.getElementById('itemlist'),
         //função que retorna o tamanho/comprimento da lista de itens
 		numItemLinhas: function(){return CALC.lista_itens_geral.rows.length;},
-		//função para remover linha quando clicar no botão
-        onclickDeleteButton: function (evt){
-			evt = evt || window.event;
-			var targ = evt.target || evt.srcElement;
+		//função com evento para remover linha quando clicar no botão
+        botao_excluir: function (event){
+			event = event || window.event;
+			var targ = event.target || event.srcElement;
 			CALC.removeLinha(targ);
 		},
         //função para remover linha
@@ -37,10 +37,12 @@ $(function(){
             CALC.calcTotalCC();
             CALC.calcTotalVme();
         },
-        onkeyup: function(evt){
-			var targ = evt.target || evt.srcElement;
+        onkeyup: function(event){
+			var targ = event.target || event.srcElement;
 			if(targ.nodeName && (targ.nodeName.toLowerCase() === 'input')){
-				while((targ.value !== '') && (targ.value.match(/^[\d]*\.?[\d]*$/) === null)){targ.value = targ.value.substring(0,targ.value.length - 1);}
+				while((targ.value !== '') && (targ.value.match(/^[\d]*\.?[\d]*$/) === null)){
+					targ.value = targ.value.substring(0,targ.value.length - 1);
+					}
 				CALC.calcular_linha(CALC.getRowNo(targ));
 				CALC.calcTotalCC();
                 CALC.calcTotalVme();
@@ -77,7 +79,7 @@ $(function(){
 			$(linha.insertCell()).append(input);
 			//entrada de um novo campo botão de excluir
             input = $('<input type="button"  readonly="readonly" class="btn btn-danger remover_botao" name="deletar_linha' + linhaCont + '" value="Excluir" id="deletar_linha' + linhaCont + '">');
-			input.click(CALC.onclickDeleteButton);
+			input.click(CALC.botao_excluir);
 			$(linha.insertCell()).append(input);
 			$(linha).children('input[type="text"]').attr("autocomplete", "off");
 		},
@@ -158,14 +160,14 @@ $(function(){
 			}
 			else{
 				lambda = parseFloat(carga_fatorial.value); //recebe o campo de Carga Fatorial (λ)
-				variancia_erro.value = (1 - Math.pow(lambda, 2)).toFixed(3); //calcula o erro de mensuração (ɛ=1-λ²)
-				cf_quadrado.value = Math.pow(lambda, 2).toFixed(3); //calcula a carga fatorial ao quadrado com base no Carga Fatorial (r²=λ²=1-ɛ)
+				variancia_erro.value = (1 - Math.pow(lambda, 2)).toFixed(4); //calcula o erro de mensuração (ɛ=1-λ²)
+				cf_quadrado.value = Math.pow(lambda, 2).toFixed(4); //calcula a carga fatorial ao quadrado com base na Carga Fatorial (r²=λ²=1-ɛ)
 			}
 		},
 
         //FUNÇÃO CALCULAR CC
 		calcTotalCC: function(){
-			var soma_CF = 0, soma_CF_exp = 0, soma_erro_var = 0, denominador = 0, calculo_cc = 0, linhaCont, CF;
+			var soma_CF = 0, soma_CF_exp = 0, soma_erro_var = 0, calculo_cc = 0, linhaCont, CF;
 			for(linhaCont = CALC.numItemLinhas(); linhaCont >= 1; linhaCont--){
                 //recebe o item do campo carga fatorial e converte para float
 				CF = parseFloat(document.getElementById('carga_fatorial' + linhaCont).value);
@@ -176,21 +178,27 @@ $(function(){
                     soma_CF_exp = Math.pow(soma_CF, 2);
                     //soma dos erros de mensuração
 					soma_erro_var += parseFloat(document.getElementById('variancia_erro' + linhaCont).value);
-                    //recebe a soma das cargas fatoriais ao quadrado + soma dos erros de mensuração
-					denominador = soma_CF_exp + soma_erro_var;
-                    //CC = soma das cargas fatoriais ao quadrado dividido pelo denominador acima
-					calculo_cc = soma_CF_exp / denominador;
+					/*o calculo da CC recebe a soma das cargas fatoriais elevada ao quadrado (soma_CF_exp), dividido pelo denominador
+					somatório da soma das cargas fatoriais elevada ao quadrado com soma dos erros de mensuração */
+					calculo_cc = soma_CF_exp / (soma_CF_exp + soma_erro_var)
 				}
 			}
-            //O campo total CC recebe o resultado da equação acima
-			document.getElementById('totalcc').value = (calculo_cc === 0.0 ? '' : calculo_cc.toFixed(3));
-			return true;
+			//O campo total CC recebe o resultado da equação acima
+			if (calculo_cc === 0.0) {
+				//se o resultado do calculo for zero, o campo total será vazio
+				document.getElementById('totalcc').value = ''
+			} else {
+				//senão o campo total receberá o cálculo da CC
+				document.getElementById('totalcc').value =  calculo_cc.toFixed(4)
+			}
+
+
 		},
 
 
         //FUNÇÃO CALCULAR VME
         calcTotalVme: function(){
-			var exp_CF_soma = 0, soma_erro_var = 0, denominador = 0, calculo_vme = 0, linhaCont, CF;
+			var exp_CF_soma = 0, soma_erro_var = 0, calculo_vme = 0, linhaCont, CF;
 			for(linhaCont = CALC.numItemLinhas(); linhaCont >= 1; linhaCont--){
                 //recebe o item do carga fatorial e converte para float
 				CF = parseFloat(document.getElementById('carga_fatorial' + linhaCont).value);
@@ -199,24 +207,26 @@ $(function(){
 					exp_CF_soma += Math.pow(CF, 2);
                     //soma dos erros de mensuração
                     soma_erro_var += parseFloat(document.getElementById('variancia_erro' + linhaCont).value);
-                    //recebe a soma das cargas fatoriais elevada ao quadrado + soma dos erros de mensuração
-					denominador = exp_CF_soma + soma_erro_var;
-                    //VME = soma das cargas fatoriais ao quadrado dividido pelo denominador acima
-					calculo_vme = exp_CF_soma / denominador;
+                    /*o calculo da VME recebe a soma do quadrado das cargas fatoriais (exp_CF_soma), dividido pelo denominador
+					somatório da soma do quadrado das cargas fatoriais com soma dos erros de mensuração */
+					calculo_vme = exp_CF_soma / (exp_CF_soma + soma_erro_var)
 				}
 			}
-            //O campo total VME recebe o resultado da equação acima
-			document.getElementById('totalvme').value = (calculo_vme === 0.0 ? '' : calculo_vme.toFixed(3));
-			return true;
+            //O campo total VME recebe o resultado da equação
+			if (calculo_vme === 0.0) {
+				//se o resultado do calculo for zero, o campo total será vazio
+				document.getElementById('totalvme').value = ''
+			} else {
+				//senão o campo total receberá o cálculo da VME
+				document.getElementById('totalvme').value =  calculo_vme.toFixed(4)
+			}
+
 		},
 	};
 
-	$('#additem').click(CALC.adicionar_linha); //chama a função adicionar linha quando clica no botão  adicionar
+	$('#adicionar').click(CALC.adicionar_linha); //chama a função adicionar linha quando clica no botão  adicionar
 	$('input.carregando').keyup(CALC.onkeyup).attr("autocomplete", "off"); //Desabilitando o autocompletar
-	//CALC.initPlaceHolder($('input.carregando')); //iniciar texto do campo CF
-	$('.remover_botao').click(CALC.onclickDeleteButton); //chama a função deletar linha quando clica no botão remover
+	$('.remover_botao').click(CALC.botao_excluir); //chama a função deletar linha quando clica no botão remover
 	$('#btn_limpar').click(CALC.limpar_campos); //chama a função para reseter o formulário quando clica no botão limpar
 
-	// define o foco para o campo de Carga Fatorial
-//	$('#carga_fatorial').focus();
 });
