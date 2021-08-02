@@ -53,7 +53,7 @@
                 <tbody>
                     <tr class="form-group">
                         <td colspan="2">
-                        <input class="btn btn-success" name="Submit" id="additem" value="Adicionar" type="button"/>
+                        <input class="btn btn-success" name="Submit" id="adicionar" value="Adicionar" type="button"/>
                         </td>
                     </tr>
                 </tbody>
