@@ -27,6 +27,6 @@ Route::get('/instrucao', function(){
     return view('paginas/instrucao');
 });
 /*
-Route::get('/','CalcController@inicio');
-Route::get('sobre','CalcController@sobre');
+Route::get('/sobre','CalcController@sobre')->name('pagina.sobre');
+Route::get('/instrucao','CalcController@instrucao')->name('pagina.instrucao');
 */
